@@ -1,0 +1,80 @@
+import axios, { AxiosPromise } from 'axios';
+import Toast from '../component/toast';
+
+class HttpClient {
+  static setBefore(hook: Function) {
+    axios.interceptors.request.use((config: any): AxiosPromise => {
+      if (typeof hook === 'function') {
+        hook();
+      }
+      return config;
+    }, (error => Promise.reject(error)));
+  }
+
+  static setAfter(hook: Function) {
+    axios.interceptors.response.use((response: any): AxiosPromise => {
+      if (typeof hook === 'function') {
+        hook();
+      }
+      return response;
+    }, ((error) => {
+      if (typeof hook === 'function') {
+        hook();
+      }
+      return Promise.reject(error);
+    }));
+  }
+
+  static request(opt: any): AxiosPromise {
+    let defaultOption = {};
+    const token = localStorage.getItem('token');
+    if (token) {
+      defaultOption = {
+        headers: {
+          Authorization: token,
+        },
+      };
+    } else {
+      defaultOption = {};
+    }
+    const option = { ...opt, ...defaultOption };
+    return axios(option)
+      .then((response) => {
+        // >>>>>>>>>>>>>> 请求成功 <<<<<<<<<<<<<<
+        // 业务逻辑错误
+        if (response.data && response.data.code !== '0000') {
+          // todo 增加业务逻辑判断
+        }
+        return response.data;
+      })
+      .catch((error: any): AxiosPromise => {
+        // >>>>>>>>>>>>>> 请求失败 <<<<<<<<<<<<<<
+        // 请求配置发生的错误,ex:没有网络
+        if (!error.response) {
+          Toast.show(`无反馈：${error.message}`);
+          return Promise.reject();
+        }
+        // 响应时状态码处理
+        const { status } = error.responseclear;
+        // const errortext = codeMessage[status] || error.response.statusText;
+        if (error.response.data && error.response.data.msg) {
+          Toast.show(error.response.data.msg);
+          return Promise.reject();
+        }
+
+        // 存在请求，服务器的返回非2XX状态码
+        if (status === 401) {
+          // todo 重定向到登陆页面
+        } else if (status === 403) {
+          Toast.show(`${status}: 没有权限访问,请联系管理员`);
+        } else if (status <= 504 && status >= 500) {
+          Toast.show(`${status}: 服务器内部错误`);
+        } else if (status >= 404 && status < 422) {
+          Toast.show(`${status}: 未找到资源`);
+        }
+        return Promise.reject();
+      });
+  }
+}
+
+export default HttpClient;
