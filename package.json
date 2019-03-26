@@ -4,9 +4,6 @@
   "description": "webpack react",
   "private": true,
   "main": "build/webpack.config.js",
-  "pre-commit": [
-    "lint-staged"
-  ],
   "scripts": {
     "build": "rm -rf dist/&&webpack --config build/webpack.prod.js",
     "start": "webpack-dev-server --open --config build/webpack.dev.js",
@@ -29,13 +26,22 @@
     "Android > 4.4",
     "ie >= 9"
   ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run precommit"
+    }
+  },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
       "npm run lint:ts",
       "git add"
     ],
-    "server/**/*.scss": [
+    "src/**/*.scss": [
       "npm run lint:style",
+      "git add"
+    ],
+    "server/**/*.js": [
+      "npm run lint:js",
       "git add"
     ]
   },
