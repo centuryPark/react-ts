@@ -1,6 +1,6 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action } from 'redux';
-import moment from 'moment';
+import format from 'date-fns/format';
 import HttpClient from '../../tools/httpClient';
 
 type JsonObject = { [key: string]: any };
@@ -21,7 +21,7 @@ export class MovieItem {
     readonly publishAt: string,
   ) {}
   get getParseTime(): string {
-    return moment(this.publishAt).format('YYYY-MM-DD HH:mm:ss');
+    return format(new Date(this.publishAt), 'YYYY-MM-DD HH:mm:ss');
   }
 }
 

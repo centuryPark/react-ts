@@ -1,13 +1,22 @@
 const webpack = require('webpack');
+const path = require('path');
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 const proxyConfig = require('../server/proxyConfig');
 
 const proxyKeys = Object.keys(proxyConfig);
+const DIST_PATH = path.resolve(__dirname, '../dist');
 
 module.exports = merge(common, {
   mode: 'development',
   devtool: 'eval-source-map',
+  output: {
+    pathinfo: true,
+    filename: 'js/[name].[hash].js',
+    path: DIST_PATH,
+    publicPath: '/',
+    // chunkFilename: '[name].js'
+  },
   module: {
     rules: [
       // 开发环境不提取css
@@ -26,7 +35,7 @@ module.exports = merge(common, {
             options: {
               sourceMap: true,
               config: {
-                path: 'postcss.config.js',  // 项目根目录创建此文件
+                path: 'postcss.config.js', // 项目根目录创建此文件
               },
             },
           },
@@ -50,11 +59,9 @@ module.exports = merge(common, {
     historyApiFallback: {
       disableDotRule: true,
     },
-    proxy: proxyKeys.map((item) => {
-      return {
-        context: item,
-        ...proxyConfig[item],
-      };
-    }),
+    proxy: proxyKeys.map(item => ({
+      context: item,
+      ...proxyConfig[item],
+    })),
   },
 });

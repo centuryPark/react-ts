@@ -1,27 +1,16 @@
 const path = require('path');
 
-const DISTPATH = path.resolve(__dirname, '../dist');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const CleanWebpackPlugin = require('clean-webpack-plugin');
-// const env = process.env.NODE_ENV;
 
 const common = {
   entry: {
     app: './src/index.tsx',
   },
-  output: {
-    // 多入口输出，加hash，利用缓存，但是两次相同代码的build可能会产生不同的hash
-    // 因为 webpack 在入口 chunk 中，包含了某些样板(boilerplate)，特别是 runtime 和 manifest 导致hash改变。
-    // 输出可能会因当前的 webpack 版本而稍有差异。新版本不一定有和旧版本相同的 hash 问题，但我们需要提取模板，以防万一。
-    pathinfo: true,
-    filename: 'js/[name].[chunkhash].js',
-    path: DISTPATH,
-    publicPath: '/', // publicPath 总是以斜杠(/)开头和结尾。
-    // chunkFilename: '[name].js'
-  },
   resolve: {
     // Add '.ts' and '.tsx' as resolvable extensions.
     extensions: ['.ts', '.tsx', '.js', '.json'],
+    symlinks: false,
   },
   module: {
     rules: [
@@ -34,6 +23,8 @@ const common = {
       }, */
       {
         test: /\.(tsx|ts)?$/,
+        include: path.resolve(__dirname, '../src'),
+        exclude: /node_modules/,
         use: [
           {
             loader: 'awesome-typescript-loader',
@@ -76,11 +67,23 @@ const common = {
   optimization: {
     runtimeChunk: 'single', // 提取模版，runtime到单独的chunk
     splitChunks: {
+      chunks: 'async',
+      minSize: 30000,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      name: true,
       cacheGroups: {
-        vendor: {
+        vendors: {
           test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
+          priority: -10,
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
         },
       },
     },

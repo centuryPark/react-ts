@@ -1,17 +1,39 @@
 const webpack = require('webpack');
+const path = require('path');
 const merge = require('webpack-merge');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const common = require('./webpack.common.js');
 
-module.exports = merge(common, {
+const { analysis } = process.env;
+const DIST_PATH = path.resolve(__dirname, '../dist');
+
+const productConfig = {
   mode: 'production',
-  devtool: 'source-map',
+  devtool: false,
+  performance: {
+    hints: 'error',
+    maxEntrypointSize: 512000, // 入口资源最大限制
+    maxAssetSize: 250000, // 单个文件
+  },
+  output: {
+    // 多入口输出，加hash，利用缓存，但是两次相同代码的build可能会产生不同的hash
+    // 因为 webpack 在入口 chunk 中，包含了某些样板(boilerplate)，特别是 runtime 和 manifest 导致hash改变。
+    // 输出可能会因当前的 webpack 版本而稍有差异。新版本不一定有和旧版本相同的 hash 问题，但我们需要提取模板，以防万一。
+    pathinfo: true,
+    filename: 'js/[name].[chunkhash].js',
+    path: DIST_PATH,
+    publicPath: '/', // publicPath 总是以斜杠(/)开头和结尾。
+    // chunkFilename: '[name].js'
+  },
   module: {
     rules: [
       {
         test: /\.scss$/,
+        include: path.resolve(__dirname, '../src'),
+        exclude: /node_modules/,
         // loader处理顺序从下往上
         use: [
           {
@@ -30,7 +52,7 @@ module.exports = merge(common, {
             options: {
               sourceMap: true,
               config: {
-                path: 'postcss.config.js',  // 项目根目录创建此文件
+                path: 'postcss.config.js', // 项目根目录创建此文件
               },
             },
           },
@@ -97,5 +119,10 @@ module.exports = merge(common, {
       hashDigestLength: 20,
     }),
   ],
-});
+};
 
+if (analysis) {
+  productConfig.plugins.push(new BundleAnalyzerPlugin());
+}
+
+module.exports = merge(common, productConfig);
