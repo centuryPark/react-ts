@@ -14,6 +14,12 @@ class Menu extends Component {
             <li>
               <Link to="/movies">live</Link>
             </li>
+            <li>
+              <Link to="/about">about</Link>
+            </li>
+            <li>
+              <Link to="/dot">dot</Link>
+            </li>
           </ul>
         </div>
       </div>
