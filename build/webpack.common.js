@@ -14,13 +14,14 @@ const common = {
   },
   module: {
     rules: [
-      /* {
+      {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
+        include: path.resolve(__dirname, '../src'),
         use: {
           loader: 'babel-loader',
         },
-      }, */
+      },
       {
         test: /\.(tsx|ts)?$/,
         include: path.resolve(__dirname, '../src'),
@@ -67,17 +68,19 @@ const common = {
   optimization: {
     runtimeChunk: 'single', // 提取模版，runtime到单独的chunk
     splitChunks: {
-      chunks: 'async',
+      chunks: 'all',
       minSize: 30000,
       maxSize: 0,
       minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
+      maxAsyncRequests: 5, // 按需加载时候最大的并行请求数
+      maxInitialRequests: 3, // 一个入口最大的并行请求数
       automaticNameDelimiter: '~',
       name: true,
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
           priority: -10,
         },
         default: {

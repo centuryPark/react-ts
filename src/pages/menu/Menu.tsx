@@ -9,7 +9,7 @@ class Menu extends Component {
           <h1>菜单</h1>
           <ul>
             <li>
-              <Link to="/count">count</Link>
+              <Link to="/about">about</Link>
             </li>
             <li>
               <Link to="/movies">live</Link>

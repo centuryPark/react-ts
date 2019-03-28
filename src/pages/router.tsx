@@ -12,6 +12,8 @@ const Loading = (): JSX.Element => (
 );
 const moviesListComponent = Loadable({ loader: () => import('./moviesList'), loading: Loading, delay: 150 });
 const menuComponent = Loadable({ loader: () => import('./menu'), loading: Loading, delay: 150 });
+// @ts-ignore
+const aboutComponent = Loadable({ loader: () => import('./about'), loading: Loading, delay: 150 });
 
 interface NoMatchProps {
   location: Location;
@@ -33,9 +35,10 @@ const BasicRouter = () => (
       path="/menu"
       component={menuComponent}
     />
-    <Redirect exact from="/" to="/menu"/>
-    <Route path="/movies" component={moviesListComponent}/>
-    <Route path="*" component={NoMatch}/>
+    <Redirect exact from="/" to="/menu" />
+    <Route path="/movies" component={moviesListComponent} />
+    <Route path="/about" component={aboutComponent} />
+    <Route path="*" component={NoMatch} />
   </Switch>
 );
 export default BasicRouter;

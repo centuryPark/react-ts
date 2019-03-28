@@ -54,7 +54,7 @@ module.exports = merge(common, {
     contentBase: '../dist',
     compress: true, // 一切服务都启用gzip 压缩
     port: 9009,
-    host: '127.0.0.1',
+    host: '0.0.0.0',
     overlay: true,
     historyApiFallback: {
       disableDotRule: true,
