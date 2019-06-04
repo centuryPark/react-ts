@@ -34,4 +34,5 @@ testem.log
 Thumbs.db
 
 package-lock.json
+yarn-error.log
 
