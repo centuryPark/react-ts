@@ -12,8 +12,7 @@
     "lint:js": "eslint --ext .js server",
     "lint:ts": "tslint 'src/**/*.{ts,tsx}'",
     "lint:style": "stylelint stylelint --syntax scss **/*.scss",
-    "lint": "npm run lint:js&&npm run lint:style&&npm run lint:ts",
-    "precommit": "lint-staged"
+    "lint": "npm run lint:js&&npm run lint:style&&npm run lint:ts"
   },
   "keywords": [
     "webpack",
@@ -29,7 +28,7 @@
   ],
   "husky": {
     "hooks": {
-      "pre-commit": "npm run precommit"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
@@ -73,7 +72,6 @@
     "node-sass": "^4.9.3",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
-    "pre-commit": "^1.2.2",
     "sass-loader": "^7.1.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.0",
