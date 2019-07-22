@@ -4367,6 +4367,13 @@ js-yaml@^3.13.0, js-yaml@^3.7.0:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
+js-yaml@^3.13.1:
+  version "3.13.1"
+  resolved "https://registry.npm.taobao.org/js-yaml/download/js-yaml-3.13.1.tgz#aff151b30bfdfa8e49e05da22e7415e9dfa37847"
+  dependencies:
+    argparse "^1.0.7"
+    esprima "^4.0.0"
+
 jsbn@~0.1.0:
   version "0.1.1"
   resolved "http://registry.npm.taobao.org/jsbn/download/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
@@ -4735,6 +4742,10 @@ lodash.mergewith@^4.6.0:
   version "4.6.1"
   resolved "http://registry.npm.taobao.org/lodash.mergewith/download/lodash.mergewith-4.6.1.tgz#639057e726c3afbdb3e7d42741caa8d6e4335927"
 
+lodash.mergewith@next:
+  version "4.6.0"
+  resolved "https://registry.npm.taobao.org/lodash.mergewith/download/lodash.mergewith-4.6.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flodash.mergewith%2Fdownload%2Flodash.mergewith-4.6.0.tgz#150cf0a16791f5903b8891eab154609274bdea55"
+
 lodash.tail@^4.1.1:
   version "4.1.1"
   resolved "http://registry.npm.taobao.org/lodash.tail/download/lodash.tail-4.1.1.tgz#d2333a36d9e7717c8ad2f7cacafec7c32b444664"
@@ -4746,6 +4757,10 @@ lodash.uniq@^4.5.0:
 lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@~4.17.10:
   version "4.17.11"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
+
+lodash@next:
+  version "4.17.4"
+  resolved "https://registry.npm.taobao.org/lodash/download/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
 log-symbols@^1.0.2:
   version "1.0.2"
