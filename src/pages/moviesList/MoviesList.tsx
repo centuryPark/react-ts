@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getMoviesList, MovieItem } from '../../redux/actions/moviesList';
 
 interface MoviesListProps {
-  list: Array<MovieItem>;
+  list: MovieItem[];
   getMoviesList: Function;
 }
 
@@ -16,7 +16,7 @@ const Item: FunctionComponent<MoviesItemProps> = (props) => {
   return (
     <div className="live-item">
       <div className="banner">
-        <img src={item.coverUrl} alt="banner"/>
+        <img src={item.coverUrl} alt="banner" />
       </div>
       <div className="desc">
         {item.desc}
@@ -33,11 +33,7 @@ class MoviesList extends Component<MoviesListProps> {
 
   buildList = (): JSX.Element[] => {
     const { list } = this.props;
-    return list.map((item: MovieItem) => {
-      return (
-        <Item key={item.id} item={item}/>
-      );
-    });
+    return list.map((item: MovieItem) => <Item key={item.id} item={item} />);
   }
 
   fetchList = () => {

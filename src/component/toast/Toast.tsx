@@ -9,7 +9,7 @@ interface ToastProps {
   onClose?: Function;
 }
 
-class Toast extends Component<ToastProps, { visible: Boolean }> {
+class Toast extends Component<ToastProps, { visible: boolean }> {
   static show(msg: string) {
     if (typeof window !== 'undefined') {
       if (!appToast) {
@@ -24,7 +24,7 @@ class Toast extends Component<ToastProps, { visible: Boolean }> {
     ReactDOM.render(<Toast visible={false} />, appToast);
   }
 
-  timer: any;
+  private timer: any = null;
 
   constructor(props: ToastProps) {
     super(props);
@@ -41,7 +41,7 @@ class Toast extends Component<ToastProps, { visible: Boolean }> {
   }
 
   componentWillReceiveProps(nextProps: ToastProps) {
-    clearTimeout(this.timer);
+    clearTimeout(this.timer!);
 
     if (nextProps.visible) {
       this.enter(nextProps);
@@ -51,7 +51,7 @@ class Toast extends Component<ToastProps, { visible: Boolean }> {
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timer);
+    clearTimeout(this.timer!);
     this.timer = null;
   }
 
@@ -62,7 +62,7 @@ class Toast extends Component<ToastProps, { visible: Boolean }> {
 
     this.timer = setTimeout(() => {
       this.leave(props);
-      clearTimeout(this.timer);
+      clearTimeout(this.timer!);
     }, 2000);
   }
 

@@ -1,15 +1,15 @@
 export const SHOW_TOAST = 'SHOW_TOAST';
-export type SHOW_TOAST = typeof SHOW_TOAST;
+export type showToastType = typeof SHOW_TOAST;
 export const HIDE_TOAST = 'HIDE_TOAST';
-export type HIDE_TOAST = typeof HIDE_TOAST;
+export type hideToastType = typeof HIDE_TOAST;
 
 export interface ShowToastAction {
-  type: SHOW_TOAST;
+  type: showToastType;
   data?: string;
 }
 
 export interface HideToastAction {
-  type: HIDE_TOAST;
+  type: hideToastType;
 }
 
 export const showToast = (msg: string): ShowToastAction => ({

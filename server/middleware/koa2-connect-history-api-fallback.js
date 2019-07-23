@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-var-requires: "off" */
 const history = require('connect-history-api-fallback');
 
 module.exports = (options) => {
