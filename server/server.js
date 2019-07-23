@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-var-requires: "off" */
 const Koa = require('koa');
 const proxy = require('http-proxy-middleware');
 const path = require('path');

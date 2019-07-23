@@ -6,7 +6,12 @@ import Toast from '../toast';
 import { show, hide } from '../../redux/actions/loading';
 import HttpClient from '../../tools/httpClient';
 
-export interface AppProps { showLoading: any; hideLoading: any; showToast: boolean; toastMsg: string; }
+export interface AppProps {
+  showLoading: any;
+  hideLoading: any;
+  showToast: boolean;
+  toastMsg: string;
+}
 
 class App extends React.Component<AppProps, {}> {
   componentDidMount() {
