@@ -3,20 +3,20 @@
  */
 
 export const SHOW_LOADING = 'SHOW_LOADING';
-export type SHOW_LOADING = typeof SHOW_LOADING;
+export type showLoading = typeof SHOW_LOADING;
 export const HIDE_LOADING = 'HIDE_LOADING';
-export type HIDE_LOADING = typeof HIDE_LOADING;
+export type hideLoading = typeof HIDE_LOADING;
 
 /*
  * action 创建函数
  */
 
 export interface ShowLoadingAction {
-  type: SHOW_LOADING;
+  type: showLoading;
 }
 
 export interface HideLoadingAction {
-  type: HIDE_LOADING;
+  type: hideLoading;
 }
 
 export function show(): ShowLoadingAction {

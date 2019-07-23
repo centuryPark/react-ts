@@ -1,4 +1,9 @@
-import { SHOW_TOAST, HIDE_TOAST, ShowToastAction, HideToastAction } from '../actions/toast';
+import {
+  SHOW_TOAST,
+  HIDE_TOAST,
+  ShowToastAction,
+  HideToastAction,
+} from '../actions/toast';
 
 interface InitState {
   visible: boolean;

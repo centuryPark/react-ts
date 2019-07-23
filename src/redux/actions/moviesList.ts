@@ -3,9 +3,19 @@ import { Action } from 'redux';
 import format from 'date-fns/format';
 import HttpClient from '../../tools/httpClient';
 
-type JsonObject = { [key: string]: any };
+interface JsonObject {
+  [key: string]: any;
+}
 
 export class MovieItem {
+  readonly id: string;
+
+  readonly coverUrl: string;
+
+  readonly desc: string;
+
+  readonly publishAt: string;
+
   static fromJson(json: JsonObject): MovieItem {
     return new MovieItem(
       json.id,
@@ -14,22 +24,24 @@ export class MovieItem {
       json.publishAt,
     );
   }
-  constructor(
-    readonly id: string,
-    readonly coverUrl: string,
-    readonly desc: string,
-    readonly publishAt: string,
-  ) {}
+
+  constructor(id: string, coverUrl: string, desc: string, publishAt: string) {
+    this.id = id;
+    this.coverUrl = coverUrl;
+    this.desc = desc;
+    this.publishAt = publishAt;
+  }
+
   get getParseTime(): string {
     return format(new Date(this.publishAt), 'YYYY-MM-DD HH:mm:ss');
   }
 }
 
 export const SET_MOVIES_LIST = 'SET_MOVIES_LIST';
-export type SET_MOVIES_LIST = typeof SET_MOVIES_LIST;
+export type setMoviesList = typeof SET_MOVIES_LIST;
 
 export interface SetMoviesAction {
-  type: SET_MOVIES_LIST;
+  type: setMoviesList;
   data: MovieItem[];
 }
 
@@ -38,7 +50,7 @@ const setMovies = (data: MovieItem[]): SetMoviesAction => ({
   data,
 });
 
-export function getMoviesList(): ThunkAction<void, Object, null, Action<string>> {
+export function getMoviesList(): ThunkAction<void, any, null, Action<string>> {
   return (dispatch: Function) => {
     HttpClient.request(
       {
